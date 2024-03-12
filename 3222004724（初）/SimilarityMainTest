@@ -1,0 +1,60 @@
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+
+public class SimilarityMainTest {
+
+    @Test
+    public void testEmptyStrings() {
+        SimilarityMain similarityMain = new SimilarityMain("", "");
+        assertEquals(1.0, similarityMain.similarity(), 0.0001);
+    }
+
+    @Test
+    public void testIdenticalStrings() {
+        SimilarityMain similarityMain = new SimilarityMain("hello", "hello");
+        assertEquals(1.0, similarityMain.similarity(), 0.0001);
+    }
+
+    @Test
+    public void testDifferentStrings() {
+        SimilarityMain similarityMain = new SimilarityMain("hello", "world");
+        assertEquals(0.0, similarityMain.similarity(), 0.0001);
+    }
+
+    @Test
+    public void testOneEmptyString() {
+        SimilarityMain similarityMain = new SimilarityMain("", "world");
+        assertEquals(0.0, similarityMain.similarity(), 0.0001);
+    }
+
+    @Test
+    public void testSingleCharacter() {
+        SimilarityMain similarityMain = new SimilarityMain("a", "a");
+        assertEquals(1.0, similarityMain.similarity(), 0.0001);
+    }
+
+
+    @Test
+    public void testCaseSensitiveStrings() {
+        SimilarityMain similarityMain = new SimilarityMain("Hello", "hello");
+        assertEquals(1.0, similarityMain.similarity(), 0.0001);
+    }
+
+    @Test
+    public void testSpecialCharacters() {
+        SimilarityMain similarityMain = new SimilarityMain("123!@#", "!@#321");
+        assertEquals(1.0, similarityMain.similarity(), 0.0001);
+    }
+
+    @Test
+    public void testWhitespace() {
+        SimilarityMain similarityMain = new SimilarityMain("hello world", "world hello");
+        assertEquals(1.0, similarityMain.similarity(), 0.0001);
+    }
+
+    @Test
+    public void testMixedCaseAndWhitespace() {
+        SimilarityMain similarityMain = new SimilarityMain("hello World", "world hello");
+        assertEquals(0.8, similarityMain.similarity(), 0.0001);
+    }
+}
